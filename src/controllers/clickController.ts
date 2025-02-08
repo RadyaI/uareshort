@@ -26,27 +26,27 @@ export async function createAnalytic(req: Request, res: Response): Promise<any> 
     try {
         const link = (req as any).redirect
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
-        const userAgent = req.useragent?.browser!
+        const userAgent = req.useragent?.browser || "Unknown"
         res.redirect(link.originalUrl)
 
-        // Create Analytic
-        prisma.clickAnalytic.create({
-            data: {
-                ipAddress: String(ip),
-                linkId: link.id,
-                userAgent
-            }
-        }).catch((err) => console.error(err.message))
-        // Create Analytic
 
-        prisma.link.update({
-            where: {
-                id: link.id
-            },
-            data: {
-                clickCount: Number(link.clickCount) + 1
-            }
-        }).catch((err) => console.error(err.message))
+        Promise.all([
+            prisma.clickAnalytic.create({
+                data: {
+                    ipAddress: String(ip),
+                    linkId: link.id,
+                    userAgent
+                }
+            }),
+            prisma.link.update({
+                where: {
+                    id: link.id
+                },
+                data: {
+                    clickCount: link.clickCount + 1
+                }
+            })
+        ]).catch((err: any) => console.error(err.message))
 
     } catch (error: any) {
         res.status(500).json({ message: error.message })
