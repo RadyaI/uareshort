@@ -151,6 +151,5 @@ fetch("https://yourapi.com/api/v1/link", {
 
 ---
 
-### Made by Radya
-[https://radya.fun](https://radya.fun)
+### Made by [Radya](https://radya.fun)
 
