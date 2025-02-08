@@ -43,9 +43,10 @@ export async function createAnalytic(req: Request, res: Response): Promise<any> 
                     id: link.id
                 },
                 data: {
-                    clickCount: link.clickCount + 1
+                    clickCount: { increment: 1 }
                 }
-            })
+            }),
+            (req as any).redirect = null
         ]).catch((err: any) => console.error(err.message))
 
     } catch (error: any) {
