@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import Joi from 'joi'
 import { prisma } from '..'
-import { errorRes, successRes } from '../middlewares/response'
+import { errorRes, successRes } from '../utils/response'
 import { compare, hashSync } from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 import { JWT_PASS } from '../secret'

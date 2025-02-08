@@ -35,9 +35,10 @@ model User {
 model Link {
   id          Int      @id @default(autoincrement())
   userId      Int
+  linkName    String
   originalUrl String
-  shortCode   String
-  customCode  String
+  shortCode   String   @unique
+  customCode  String?
   clickCount  Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
